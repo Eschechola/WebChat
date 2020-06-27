@@ -1,0 +1,39 @@
+﻿@model WebChat.DTO.LoginDTO
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<section class="content">
+    <div class="mid-box" id="image-display">
+        <img src="~/images/banner-bg.svg" />
+    </div>
+
+    <div class="mid-box" id="box-aligned">
+        <div class="form-user">
+            <form method="post" action="/">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <h2>Digite algumas informações para poder entrar no chat</h2>
+
+                <input asp-for="Name" name="Name" maxlength="40" required placeholder="Digite seu nome..." />
+                <br />
+                <span asp-validation-for="Name"></span>
+
+                <input asp-for="Email" name="Email" maxlength="180" required placeholder="Digite seu email..." />
+                <br />
+                <span asp-validation-for="Email"></span>
+
+                <hr />
+
+                <input type="submit" value="Entrar" />
+
+                <a href="https://github.com/Eschechola/WebChat">
+                    <input type="button" value="Repositório" />
+                </a>
+            </form>
+        </div>
+    </div>
+</section>
