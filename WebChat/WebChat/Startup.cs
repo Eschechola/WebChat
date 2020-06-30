@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebChat.Infra.Data.Context;
+using WebChat.Infra.Interfaces;
+using WebChat.Infra.Repository;
 using WebChat.SignalR;
 
 namespace WebChat
@@ -25,6 +29,10 @@ namespace WebChat
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddDbContext<ChatDataContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:SqlServer"]));
+
             services.AddSignalR();
 
             services.AddControllersWithViews()

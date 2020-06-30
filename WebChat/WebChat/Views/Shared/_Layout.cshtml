@@ -5,17 +5,17 @@
     <title>WebChat - @ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <link href="~/css/login.css" rel="stylesheet" />
+    <link href="~/css/@ViewBag.PageCSS" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <body>
 
     @RenderBody()
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/signalR/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>

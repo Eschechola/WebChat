@@ -1,7 +1,9 @@
-﻿@model WebChat.DTO.LoginDTO
+﻿@model WebChat.DTO.UserViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Home";
+    ViewBag.PageCSS = "login.css";
+    ViewBag.PageJS = "login.css";
 }
 
 <section class="content">
@@ -10,30 +12,87 @@
     </div>
 
     <div class="mid-box" id="box-aligned">
-        <div class="form-user">
+        <div class="form-login">
             <form method="post" action="/">
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
 
-                <h2>Digite algumas informações para poder entrar no chat</h2>
+                <h2>Digite suas informações para poder entrar no chat</h2>
 
-                <input asp-for="Name" name="Name" maxlength="40" required placeholder="Digite seu nome..." />
-                <br />
-                <span asp-validation-for="Name"></span>
+                <input name="IsLogin" class="input-hidden" value="1" />
 
-                <input asp-for="Email" name="Email" maxlength="180" required placeholder="Digite seu email..." />
+                <input name="Email" maxlength="180" required placeholder="Digite seu EMAIL" />
                 <br />
-                <span asp-validation-for="Email"></span>
+
+                <input name="Password" type="password" maxlength="12" required placeholder="Digite sua SENHA" />
+                <br />
 
                 <hr />
+                <p class="login-text">Ainda não tem uma conta? <span class="link" onclick="ShowRegister()">Cadastre - se</span></p>
 
                 <input type="submit" value="Entrar" />
 
                 <a href="https://github.com/Eschechola/WebChat">
-                    <input type="button" value="Repositório" />
+                    <button>
+                        <img src="~/images/logo-github.png" />
+                    </button>
+                </a>
+            </form>
+        </div>
+
+        <div class="form-register">
+            <form method="post" action="/">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <h2>Digite algumas informações para poder se cadastrar no chat</h2>
+
+                <input name="IsLogin" class="input-hidden" value="0" />
+
+                <input asp-for="Name" name="Name" maxlength="40" required placeholder="Digite seu NOME" />
+                <br />
+                <span asp-validation-for="Name"></span>
+
+                <input asp-for="Email" name="Email" maxlength="180" required placeholder="Digite seu EMAIL" />
+                <br />
+                <span asp-validation-for="Email"></span>
+
+                <input asp-for="Password" name="Password" type="password" maxlength="12" required placeholder="Digite sua SENHA" />
+                <br />
+                <span asp-validation-for="Password"></span>
+
+                <input asp-for="ConfirmPassword" name="ConfirmPassword" type="password" maxlength="12" required placeholder="Digite sua SENHA novamente" />
+                <br />
+                <span asp-validation-for="ConfirmPassword"></span>
+
+                <hr />
+                <p class="login-text">Já tem uma conta? <span class="link" onclick="ShowLogin()">Entre aqui</span></p>
+
+                <input type="submit" value="Cadastrar" />
+
+                <a href="https://github.com/Eschechola/WebChat">
+                    <button>
+                        <img src="~/images/logo-github.png" />
+                    </button>
                 </a>
             </form>
         </div>
     </div>
 </section>
+
+<!-- SCRIPTS -->
+<script src="~/js/login.js"></script>
+
+@if (ViewBag.Error != null)
+{
+    <div class="modal-error">
+        <p class="text-error">@ViewBag.Error</p>
+    </div>
+
+    <script>
+        setTimeout(OpenErrorModal, 500);
+    </script>
+}
+

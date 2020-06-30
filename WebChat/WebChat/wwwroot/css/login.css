@@ -13,6 +13,8 @@ html {
 body {
     overflow-x: hidden !important;
     overflow-y: hidden !important;
+    background: url(../images/main-bg.jpg);
+    width: 100% 100%;
 }
 
 .content {
@@ -20,7 +22,7 @@ body {
     height: auto;
     background: white;
     display: flex;
-    background: rgba(63,61,86, 0.97);
+    background: rgba(63,61,86, 0.95);
     overflow-x: hidden !important;
     overflow-y: hidden !important;
 }
@@ -29,6 +31,7 @@ body {
     flex: 1;
     display: flex;
     height: 100vh;
+    transition: 1s;
 }
 
 #box-aligned {
@@ -41,18 +44,34 @@ body {
     height: 95vh;
     margin-top: 15px;
     max-width: 100%;
+    animation: Balancing 12s linear infinite;
+    z-index: 10;
+    opacity: 0.9;
 }
 
-.form-user {
+.form-register {
+    display: none;
     position: absolute;
     width: 450px;
-    height: 580px;
+    height: 750px;
     background: transparent;
     border-radius: 30px;
     border: 1px solid rgba(207,207,207, 0.4);
+    transition: 2s;
 }
 
-.form-user h2 {
+.form-login {
+    display: block;
+    position: absolute;
+    width: 450px;
+    height: 560px;
+    background: transparent;
+    border-radius: 30px;
+    border: 1px solid rgba(207,207,207, 0.4);
+    transition: 2s;
+}
+
+.form-register h2, .form-login h2 {
     color: #cfcfcf;
     font-size: 20px;
     width: 85%;
@@ -76,13 +95,13 @@ input {
     outline: 0;
     margin-left: 50% !important;
     transform: translateX(-50%);
-    margin-top: 60px !important;
+    margin-top: 50px !important;
 }
 
 
 input[type="submit"]{
     width: 50%;
-    margin-top: 30px !important;
+    margin-top: 20px !important;
     color: #cfcfcf;
     background-color: #6C63FF;
     border-color: #6C63FF;
@@ -91,13 +110,17 @@ input[type="submit"]{
     transition: 0.5s;
 }
 
+.input-hidden{
+    display: none;
+}
+
 input[type="submit"]:hover{
     background: #564fc9 !important;
     border-color: #564fc9;
     transition: 0.5s;
 }
 
-input[type="button"]{
+button {
     width: 60%;
     margin-top: 20px !important;
     color: #cfcfcf;
@@ -106,9 +129,20 @@ input[type="button"]{
     padding: 10px;
     font-weight: bold;
     transition: 0.5s;
+    border-radius: 25px !important;
+    margin-left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 8px !important
 }
 
-input[type="button"]:hover{
+button img{
+    width: 30px;
+    height: 30px !important;
+    animation: none !important;
+    margin-top: 0 !important
+}
+
+button:hover{
     background: #0a0a0a !important;
     border-color: #0a0a0a;
     transition: 0.5s;
@@ -116,7 +150,7 @@ input[type="button"]:hover{
 
 
 hr {
-    margin-top: 80px !important;
+    margin-top: 50px !important;
     background: #cfcfcf;
     width: 90%;
     margin-left: 50%;
@@ -132,16 +166,100 @@ hr {
     position: absolute;
 }
 
+.login-text{
+    width: 90% !important;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: lightgray;
+}
+
+.link {
+    color: #ababab;
+}
+
+.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modal-error {
+    margin-left: -380px;
+    width: 380px;
+    height: 55px;
+    background: #d9100d;
+    color: white;
+    position: fixed;
+    top: 0;
+    margin-top: 50px;
+    z-index: 10;
+    transition: 0.6s;
+    border-right: 12px solid #ba2523;
+    border-left: 10px solid #ba2523;
+}
+
+
+.text-error {
+    font-weight: bold;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 362px !important;
+    position: relative;
+    word-wrap: break-word;
+    text-align:center
+}
+
+
+
+@Keyframes Opacity {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes Balancing{
+    0% {
+        margin-top: 15px;
+        margin-left: 0px;
+        height: 95vh;
+    }
+    50% {
+        margin-top: 50px;
+        margin-left: 50px;
+        height: 80vh;
+    }
+    75% {
+        margin-top: 15px;
+        height: 85vh;
+    }
+    100% {
+        margin-top: 15px;
+        margin-left: 0px;
+        height: 95vh;
+    }
+}
 
 @media screen and (max-width: 1024px) {
     #image-display{
         display: none;
     }
+
+    .field-validation-error{
+        font-size:15px;
+    }
 }
 
 
 @media screen and (max-width: 600px) {
-    .form-user{
+    .form-register {
+        width: 350px;
+        height: 760px;
+    }
+
+    .form-login {
         width: 350px;
     }
 }
