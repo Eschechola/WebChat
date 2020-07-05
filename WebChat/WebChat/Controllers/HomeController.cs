@@ -5,6 +5,7 @@ using WebChat.Infra.Entities;
 using WebChat.Infra.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using WebChat.ViewModels;
 
 namespace WebChat.Controllers
 {
@@ -101,7 +102,13 @@ namespace WebChat.Controllers
         [Route("/chat")]
         public IActionResult Chat()
         {
-            return View();
+            var chatViewModel = new ChatViewModel
+            {
+                Users = _userRepository.GetAll()
+            };
+
+
+            return View(chatViewModel);
         }
 
 

@@ -2,6 +2,7 @@
 using WebChat.Infra.Entities;
 using WebChat.Infra.Interfaces;
 using WebChat.Infra.Data.Context;
+using System.Collections.Generic;
 
 namespace WebChat.Infra.Repository
 {
@@ -17,6 +18,11 @@ namespace WebChat.Infra.Repository
         public User Get(int id)
         {
             return _context.Users.Where(x => x.Id == id).FirstOrDefault();            
+        }
+
+        public IList<User> GetAll()
+        {
+            return _context.Users.ToList();
         }
 
         public User GetByEmail(string email)
