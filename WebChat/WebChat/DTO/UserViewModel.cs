@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebChat.DTO
+namespace WebChat.Application.DTO
 {
     public class UserViewModel
     {

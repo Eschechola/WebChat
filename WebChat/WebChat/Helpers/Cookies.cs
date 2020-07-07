@@ -1,12 +1,12 @@
 ﻿using System;
-using WebChat.Infra.Entities;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using WebChat.Domain.Entities;
 
-namespace WebChat.Helpers
+namespace WebChat.Application.Helpers
 {
     public class Cookies
     {
@@ -23,7 +23,8 @@ namespace WebChat.Helpers
             {
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "User")
+                new Claim(ClaimTypes.Role, "User"),
+                new Claim("Id", user.Id.ToString())
             };
 
             var identidadeDeUsuario = new ClaimsIdentity(claims, "Basic");

@@ -1,8 +1,7 @@
-﻿namespace WebChat.Infra.Entities
+﻿namespace WebChat.Domain.Entities
 {
-    public class User
+    public class User : Base
     {
-        public int Id { get; set; }
         public string Hash { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }

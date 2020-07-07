@@ -26,7 +26,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\WebChat.Infra\WebChat.Infra.csproj" />
+    <ProjectReference Include="..\WebChat.Services\WebChat.Services.csproj" />
   </ItemGroup>
 
 </Project>

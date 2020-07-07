@@ -1,21 +1,21 @@
 ﻿using System;
-using WebChat.DTO;
-using WebChat.Helpers;
-using WebChat.Infra.Entities;
-using WebChat.Infra.Interfaces;
+using WebChat.Application.DTO;
+using WebChat.Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using WebChat.ViewModels;
+using WebChat.Application.ViewModels;
+using WebChat.Domain.Entities;
+using WebChat.Services.Interfaces;
 
-namespace WebChat.Controllers
+namespace WebChat.Application.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public HomeController(IUserRepository userRepository)
+        public HomeController(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -39,7 +39,7 @@ namespace WebChat.Controllers
                 if (User.Identity.IsAuthenticated)
                     return Redirect("/chat");
 
-                var userExists = _userRepository.GetByEmail(loginUser.Email);
+                var userExists = _userService.GetByEmail(loginUser.Email);
 
                 if(loginUser.IsLogin == "1")
                 {
@@ -72,17 +72,23 @@ namespace WebChat.Controllers
 
                     var user = new User
                     {
-                        Hash = "#" + Guid.NewGuid()
-                                .ToString()
-                                .Substring(0, 4)
-                                .ToUpper(),
-
                         Email = loginUser.Email,
                         Name = loginUser.Name,
                         Password = loginUser.Password
                     };
 
-                    var userCreated = _userRepository.Save(user);
+
+                    //não gerar hash repetido pra usuário
+                    do
+                    {
+                        user.Hash = "#" + Guid.NewGuid()
+                                    .ToString()
+                                    .Substring(0, 4)
+                                    .ToUpper();
+
+                    } while (_userService.GetByHash(user.Hash) != null);
+
+                    var userCreated = _userService.Save(user);
 
                     new Cookies(HttpContext).Login(userCreated);
                 }
@@ -104,7 +110,7 @@ namespace WebChat.Controllers
         {
             var chatViewModel = new ChatViewModel
             {
-                Users = _userRepository.GetAll()
+                Users = _userService.GetAll()
             };
 
 

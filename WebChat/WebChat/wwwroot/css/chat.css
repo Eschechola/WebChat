@@ -107,6 +107,10 @@ body{
     margin-top: 7.5%;
 }
 
+.hash-indicator {
+    color: blueviolet;
+}
+
 .input-search-contact {
     width: 90%;
     color: #cfcfcf;
@@ -219,6 +223,10 @@ body{
     margin-left: 20px;
     margin-top: 20px;
     float: left;
+}
+
+.picture-header img{
+    width: 100%;
 }
 
 

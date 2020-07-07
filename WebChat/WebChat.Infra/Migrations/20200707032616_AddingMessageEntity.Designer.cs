@@ -9,8 +9,8 @@ using WebChat.Infra.Data.Context;
 namespace WebChat.Infra.Migrations
 {
     [DbContext(typeof(ChatDataContext))]
-    [Migration("20200628043704_DatabaseRename")]
-    partial class DatabaseRename
+    [Migration("20200707032616_AddingMessageEntity")]
+    partial class AddingMessageEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,11 +20,38 @@ namespace WebChat.Infra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WebChat.Domain.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FkIdReceiver")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FkIdSender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("varchar(MAX)")
+                        .HasMaxLength(2147483647);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("WebChat.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
@@ -42,7 +69,18 @@ namespace WebChat.Infra.Migrations
                         .HasColumnType("varchar(40)")
                         .HasMaxLength(40);
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(12)")
+                        .HasMaxLength(12);
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Hash")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

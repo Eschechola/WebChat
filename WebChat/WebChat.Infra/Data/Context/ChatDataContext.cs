@@ -1,6 +1,7 @@
-﻿using WebChat.Infra.Entities;
+﻿
 using WebChat.Infra.Data.Maps;
 using Microsoft.EntityFrameworkCore;
+using WebChat.Domain.Entities;
 
 namespace WebChat.Infra.Data.Context
 {
@@ -11,10 +12,12 @@ namespace WebChat.Infra.Data.Context
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new UserMap());
+            builder.ApplyConfiguration(new MessageMap());
         }
     }
 }

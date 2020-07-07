@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebChat.Domain\WebChat.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,6 @@
 using System;
 
-namespace WebChat.Models
+namespace WebChat.Application.Models
 {
     public class ErrorViewModel
     {

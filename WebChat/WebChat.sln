@@ -3,9 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Infra", "WebChat.Infra\WebChat.Infra.csproj", "{C899E9BD-1EE5-43E3-B39E-B3EA9FC48BD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Infra", "WebChat.Infra\WebChat.Infra.csproj", "{C899E9BD-1EE5-43E3-B39E-B3EA9FC48BD6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat", "WebChat\WebChat.csproj", "{54F06AB6-4308-4B14-9A84-CD241AB9E423}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Application", "{A77A92AB-2BC0-4A50-A485-54852F4F76A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{DB3213D0-F7A4-4FF7-9A26-049E579680DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{13FD79AB-B8AB-4D0C-82C4-D8CAE8B19237}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infra", "4 - Infra", "{A582283F-B514-4A65-BF50-523A2C2E8FF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Domain", "WebChat.Domain\WebChat.Domain.csproj", "{B6880CB3-531A-4270-BBC1-8AC55FF05A4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Services", "WebChat.Services\WebChat.Services.csproj", "{7D6DC48B-0552-420D-BC38-4FD378B86467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +33,23 @@ Global
 		{54F06AB6-4308-4B14-9A84-CD241AB9E423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54F06AB6-4308-4B14-9A84-CD241AB9E423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54F06AB6-4308-4B14-9A84-CD241AB9E423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6880CB3-531A-4270-BBC1-8AC55FF05A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6880CB3-531A-4270-BBC1-8AC55FF05A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6880CB3-531A-4270-BBC1-8AC55FF05A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6880CB3-531A-4270-BBC1-8AC55FF05A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D6DC48B-0552-420D-BC38-4FD378B86467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D6DC48B-0552-420D-BC38-4FD378B86467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D6DC48B-0552-420D-BC38-4FD378B86467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D6DC48B-0552-420D-BC38-4FD378B86467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C899E9BD-1EE5-43E3-B39E-B3EA9FC48BD6} = {A582283F-B514-4A65-BF50-523A2C2E8FF4}
+		{54F06AB6-4308-4B14-9A84-CD241AB9E423} = {A77A92AB-2BC0-4A50-A485-54852F4F76A6}
+		{B6880CB3-531A-4270-BBC1-8AC55FF05A4E} = {13FD79AB-B8AB-4D0C-82C4-D8CAE8B19237}
+		{7D6DC48B-0552-420D-BC38-4FD378B86467} = {DB3213D0-F7A4-4FF7-9A26-049E579680DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {430BC201-814D-451E-A0C8-F97BFB55F0B5}

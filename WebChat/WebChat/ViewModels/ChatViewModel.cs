@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebChat.Infra.Entities;
+using WebChat.Domain.Entities;
 
-namespace WebChat.ViewModels
+namespace WebChat.Application.ViewModels
 {
     public class ChatViewModel
     {

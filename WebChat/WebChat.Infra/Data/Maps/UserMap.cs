@@ -1,6 +1,6 @@
-﻿using WebChat.Infra.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WebChat.Domain.Entities;
 
 namespace WebChat.Infra.Data.Maps
 {
@@ -17,7 +17,7 @@ namespace WebChat.Infra.Data.Maps
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id)
-                .UseSqlServerIdentityColumn();
+                .UseIdentityColumn();
             //
 
             //

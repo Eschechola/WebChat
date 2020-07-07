@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading;
 
-namespace WebChat.SignalR
+namespace WebChat.Application.SignalR
 {
     public class ChatHub : Hub
     {

@@ -1,4 +1,4 @@
-﻿@model WebChat.ViewModels.ChatViewModel
+﻿@model WebChat.Application.ViewModels.ChatViewModel
 @using System.Security.Claims;
 
 
@@ -6,6 +6,10 @@
     ViewBag.Title = "Chat";
     ViewBag.PageCSS = "chat.css";
 }
+
+<script>
+    var myId = Number(@User.Claims.ToList()[3].Value)                           
+</script>
 
 <section class="content">
     <div class="chat">
@@ -19,16 +23,17 @@
                 {
                     @foreach (var user in Model.Users)
                     {
-
                         @if(user.Email != User.FindFirst(ClaimTypes.Email).Value)
                         {
-                            <div class="contact-item">
+                            <div class="contact-item" onclick="loadUser(@user.Id)">
                                 <div class="image-contact">
                                     <img src="~/images/user.svg"/>
                                 </div>
 
                                 <div class="contact-info">
-                                    <p>@String.Concat(user.Name, user.Hash)</p>
+                                    <p>
+                                        @user.Name<span class="hash-indicator">@user.Hash</span>
+                                    </p>
                                 </div>
                             </div>
                         }
@@ -52,6 +57,7 @@
             
             <div class="chat-header" id="conversation-header">
                 <div class="picture-header">
+                    <img src="~/images/user.svg" />
                 </div>
 
                 <h2 class="name-header">Lucas Gabriel</h2>
@@ -62,30 +68,11 @@
                 <div class="chat-itens">
                     
                     <section class="messages">
-                        @*@for(int i = 0; i < 100; i++)
-                        { 
-                            <div class="box-message-left">
-                                <div class="contact-indicator"></div>
-                                <div class="box-contact-message">
-                                    <p>a</p>
-                                    <h6 class="hour-message">@DateTime.Now.ToString("hh:mm")</h6>
-                                </div>
-                            </div>
 
-                            <div class="box-message-right">
-                                <div class="my-indicator"></div>
-                                
-                                <div class="box-my-message">
-                                    <p>Olá mundoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
-
-                                    <h6 class="hour-message">@DateTime.Now.ToString("hh:mm")</h6>
-                                </div>                                
-                            </div>
-                        }*@
                     </section>
 
                     <div class="message-itens">
-                        <input class="input-send-message" placeholder="Digite aqui sua mensagem..." maxlength="900"/>
+                        <input class="input-send-message" placeholder="Digite aqui sua mensagem..." maxlength="2047483647"/>
 
                         <div class="box-send-message-icon">
                             <img src="~/images/send.svg" />
@@ -95,4 +82,4 @@
             </main>
         </div>
     </div>
-</section>
+</section>13
