@@ -5,6 +5,7 @@ namespace WebChat.Services.Interfaces
 {
     public interface IMessageService
     {
+        Message Save(Message message);
         IList<Message> GetConversation(int receiverId, int senderId);
     }
 }

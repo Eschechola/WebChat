@@ -21,10 +21,11 @@ namespace WebChat.Application.Helpers
         {
             var claims = new List<Claim>
             {
+                new Claim("Id", user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, "User"),
-                new Claim("Id", user.Id.ToString())
+                new Claim("Password", user.Password),
+                new Claim(ClaimTypes.Role, "User")
             };
 
             var identidadeDeUsuario = new ClaimsIdentity(claims, "Basic");

@@ -18,5 +18,10 @@ namespace WebChat.Services.Services
         {
             return _messageRepository.GetConversation(receiverId, senderId);
         }
+
+        public Message Save(Message message)
+        {
+            return _messageRepository.Save(message);
+        }
     }
 }

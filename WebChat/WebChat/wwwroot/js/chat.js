@@ -3,30 +3,76 @@
     .build();
 
 
-var nameUser = document.getElementById('userInput');
-var messageUser = document.getElementById('messageInput');
+connection.on("ReceiveMessage", function (messageSend) {
 
+    if (messageSend.fkIdReceiver == thisUserOBJ.id) {
+        var messageFormatted = messageSend.text.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
 
-connection.on("ReceiveMessage", function (user, message) {
+        var dateFormatted = FormatDate(messageSend.sendDate);
 
-    var msg = message.replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        var messagesList = document.querySelector('.messages');
 
-    var liElement = document.createElement('li');
+        messagesList.innerHTML += `
+                            <div class="box-message-left">
+                                <div class="contact-indicator"></div>
 
-    liElement.innerHTML = '<strong>' + user + '</strong>:&nbsp;&nbsp;' + msg;
+                                <div class="box-contact-message">
+                                    <p>${ messageFormatted }</p>
+                                    <h6 class="hour-message">${ dateFormatted }</h6>
+                                </div>
+                            </div>
+                        `;
 
-    document.getElementById('messagesList').appendChild(liElement);
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
 });
 
 
+
+var thisUserOBJ;
+var thisUserMessage = document.getElementById('user-message');
+var thisReceiverId;
+
 connection.start()
     .then(function () {
-        //document.getElementById('sendButton').addEventListener('click', function (event) {
-        //    connection.invoke('SendMessage', nameUser.value, messageUser.value);
-        //    event.preventDefault();
-        //});
+        document.getElementById('send-button').addEventListener('click', function (event) {
+
+            if (thisUserMessage.value != "") {
+
+                var now = new Date();
+                var day = now.getDate().toString().padStart(2, '0');
+                var month = (now.getMonth() + 1).toString().padStart(2, '0');
+                var year = now.getFullYear();
+                var hour = now.getHours() + ":" + now.getMinutes();
+
+                var dateFormatted = (day + "/" + month + "/" + year + " " + hour).toString();
+
+
+                var message = thisUserMessage.value;
+                thisUserMessage.value = "";
+
+                var messagesList = document.querySelector('.messages');
+                messagesList.innerHTML += `
+                            <div class="box-message-right">
+                                <div class="my-indicator"></div>
+                                
+                                <div class="box-my-message">
+                                    <p>${ message }</p>
+                                    <h6 class="hour-message">
+                                        ${ dateFormatted}
+                                    </h6>
+                                </div>                                
+                            </div>
+                        `;
+
+                messagesList.scrollTop = messagesList.scrollHeight;
+
+                connection.invoke('SendMessage', thisUserOBJ, message, thisReceiverId);
+                event.preventDefault();
+            }
+        });
     })
     .catch(error => {
         console.error(error.message);
@@ -39,7 +85,7 @@ function loadUser(idSender) {
 }
 
 function getMessages(idSender) {
-    var url = `/api/messages/${myId}/${idSender}`;
+    var url = `/api/messages/${thisUserOBJ.id}/${idSender}`;
     console.log('Request to ' + url);
 
     $.ajax({
@@ -55,35 +101,42 @@ function getMessages(idSender) {
                 console.log(messageOBJ);
 
                 //limpa a caixa das mensagens
-                var messages = document.querySelector('.messages');
-                messages.innerHTML = "";
+                var messagesList = document.querySelector('.messages');
+                messagesList.innerHTML = "";
 
                 for (var i = 0; i < messageOBJ.data.messages.length; i++) {
-                    if (messageOBJ.data.messages[i].fkIdSender != myId) {
 
-                        messages.innerHTML += `
+                    var dateFormatted = FormatDate(messageOBJ.data.messages[i].sendDate);
+
+                    if (messageOBJ.data.messages[i].fkIdSender != thisUserOBJ.id) {
+
+                        messagesList.innerHTML += `
                             <div class="box-message-left">
                                 <div class="contact-indicator"></div>
 
                                 <div class="box-contact-message">
                                     <p>${ messageOBJ.data.messages[i].text}</p>
-                                    <h6 class="hour-message">${ messageOBJ.data.messages[i].sendDate.substring(0, 13)}</h6>
+                                    <h6 class="hour-message">${ dateFormatted }</h6>
                                 </div>
                             </div>
                         `;
                     }
                     else {
-                        messages.innerHTML += `
+                        messagesList.innerHTML += `
                             <div class="box-message-right">
                                 <div class="my-indicator"></div>
                                 
                                 <div class="box-my-message">
                                     <p>${ messageOBJ.data.messages[i].text}</p>
-                                    <h6 class="hour-message">${ messageOBJ.data.messages[i].sendDate.substring(0, 13)}</h6>
+                                    <h6 class="hour-message">
+                                        ${ dateFormatted }
+                                    </h6>
                                 </div>                                
                             </div>
                         `;
                     }
+
+                    messagesList.scrollTop = messagesList.scrollHeight;
                 }
             }
             else {
@@ -118,14 +171,62 @@ function getUser(id) {
                 document.querySelector('#conversation-header').style.display = "block";
                 document.querySelector('.conversation-chat').style.display = "block";
 
-
-
                 //seta o nome do usuario no header
                 document.querySelector('.name-header').innerHTML = userOBJ.data.name + '<br>' + '<span class="hash-indicator">' + userOBJ.data.hash + '</span>';
+
+                thisReceiverId = Number(userOBJ.data.id);
             }
             else {
                 alert(userOBJ.message);
             }
         }
     });
+}
+
+
+function FormatDate(dateString) {
+    //formatação de data dd/mm/yyyy hh:mm
+    dateString = dateString
+        .replace(/-/g, '/')
+        .replace('T', ' ')
+        .substring(0, 16);
+
+    // 2020/07/08 12:30
+    // 08/07/2020 12:30
+    var dateFormatted = dateString[8] + dateString[9] + dateString[7] + dateString[5] + dateString[6] + dateString[4] +
+        dateString[0] + dateString[1] + dateString[2] + dateString[3] + dateString.substring(10, 16);
+
+    return dateFormatted;
+}
+
+
+function SearchUser() {
+    var termSearched = document.getElementById('search-input').value;
+    var names = document.getElementsByClassName('username');
+    var contactsBox = document.getElementsByClassName('contact-item');
+
+    console.log(names);
+
+    if (termSearched != "") {
+        for (var i = 0; i < contactsBox.length; i++) {
+            //verifica se existe algum nome na lista
+            var nameAux = names[i].innerText.toLowerCase()
+                .replace(/<span class=\"hash-indicator\">/g, '')
+                .replace(/span>/g, '');
+
+            console.log(nameAux);
+
+            if (nameAux.includes(termSearched.toLowerCase())) {
+                contactsBox[i].style.display = 'block';
+            }
+            else {
+                contactsBox[i].style.display = 'none';
+            }
+        }
+    }
+    else {
+        for (var i = 0; i < contactsBox.length; i++) {
+            contactsBox[i].style.display = 'block';
+        }
+    }
 }

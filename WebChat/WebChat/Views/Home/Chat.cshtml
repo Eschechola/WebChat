@@ -7,15 +7,21 @@
     ViewBag.PageCSS = "chat.css";
 }
 
-<script>
-    var myId = Number(@User.Claims.ToList()[3].Value)                           
-</script>
+    <script>
+        var thisUserOBJ =
+        {
+            id: Number(@User.Claims.ToList()[0].Value),
+            name: '@User.Claims.ToList()[1].Value',
+            email: '@User.Claims.ToList()[2].Value',
+            password:  '@User.Claims.ToList()[3].Value',
+        }
+    </script>
 
 <section class="content">
     <div class="chat">
         <div class="contacts">
             <div class="chat-header">
-                <input class="input-search-contact" placeholder="Pesquise um usuário..." />
+                <input class="input-search-contact" id="search-input" onkeyup="SearchUser()" placeholder="Pesquise um usuário..." />
             </div>
 
             <div class="contacts-list">
@@ -31,7 +37,7 @@
                                 </div>
 
                                 <div class="contact-info">
-                                    <p>
+                                    <p class="username">
                                         @user.Name<span class="hash-indicator">@user.Hash</span>
                                     </p>
                                 </div>
@@ -72,14 +78,14 @@
                     </section>
 
                     <div class="message-itens">
-                        <input class="input-send-message" placeholder="Digite aqui sua mensagem..." maxlength="2047483647"/>
+                        <input class="input-send-message" id="user-message" placeholder="Digite aqui sua mensagem..." maxlength="2047483647"/>
 
                         <div class="box-send-message-icon">
-                            <img src="~/images/send.svg" />
+                            <img src="~/images/send.svg" id="send-button" />
                         </div>
                     </div>
                 </div>
             </main>
         </div>
     </div>
-</section>13
+</section>

@@ -1,17 +1,34 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
-using System.Threading;
+using WebChat.Domain.Entities;
+using WebChat.Services.Interfaces;
 
 namespace WebChat.Application.SignalR
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessage(string user, string message)
+        private readonly IMessageService _messageService;
+
+        public ChatHub(IMessageService messageService)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            _messageService = messageService;
+        }
+
+        public async Task SendMessage(User user, string message, int receiverID)
+        {
+
+            var messageSend = new Message
+            {
+                FkIdSender = user.Id,
+                FkIdReceiver = receiverID,
+                Text = message,
+                SendDate = DateTime.Now
+            };
+
+            _messageService.Save(messageSend);
+
+            await Clients.All.SendAsync("ReceiveMessage", messageSend);
         }
     }
 }
