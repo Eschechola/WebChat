@@ -39,6 +39,7 @@ body{
     height: 100px;
     background: transparent;
     display: flex;
+    flex-direction: column;
     align-content: center;
     justify-content: center;
     align-items: center;
@@ -332,3 +333,37 @@ body{
 .box-contact-message .hour-message{
     float: right !important;
 }
+
+.username{
+    width: 100%;
+}
+
+.msg-indicator {
+    width: 17px;
+    height: 15px;
+    background: mediumseagreen;
+    margin-top: 22px;
+    border-radius: 100%;
+    float: right !important;
+    transition: 0.4s;
+    opacity: 0;
+}
+
+.welcome-text{
+    color: #ededed;
+    font-size: 1.2rem;
+}
+
+.welcome-text a{
+    text-decoration: none;
+    color: red;
+    transition: 0.5s;
+    opacity:0.8;
+    margin-top: 20px !important;
+}
+
+.welcome-text a:hover{
+    color: darkred;
+    transition: 0.5s;
+    opacity:0.8;
+}   

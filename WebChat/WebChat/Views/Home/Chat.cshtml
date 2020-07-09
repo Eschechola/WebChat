@@ -21,6 +21,10 @@
     <div class="chat">
         <div class="contacts">
             <div class="chat-header">
+                <center>
+                    <p class="welcome-text">Olá @User.Identity.Name | <a href="/logout">SAIR</a></p>
+                </center>
+                <br />
                 <input class="input-search-contact" id="search-input" onkeyup="SearchUser()" placeholder="Pesquise um usuário..." />
             </div>
 
@@ -31,14 +35,14 @@
                     {
                         @if(user.Email != User.FindFirst(ClaimTypes.Email).Value)
                         {
-                            <div class="contact-item" onclick="loadUser(@user.Id)">
+                            <div class="contact-item" id="user-@user.Id" onclick="loadUser(@user.Id); clearMessages(this)">
                                 <div class="image-contact">
                                     <img src="~/images/user.svg"/>
                                 </div>
 
                                 <div class="contact-info">
                                     <p class="username">
-                                        @user.Name<span class="hash-indicator">@user.Hash</span>
+                                        @user.Name<span class="hash-indicator">@user.Hash</span><div class="msg-indicator"></div>
                                     </p>
                                 </div>
                             </div>

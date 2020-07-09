@@ -2,19 +2,21 @@
     .withUrl("/chatHub")
     .build();
 
-
 connection.on("ReceiveMessage", function (messageSend) {
 
     if (messageSend.fkIdReceiver == thisUserOBJ.id) {
-        var messageFormatted = messageSend.text.replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
+        //se estiver com o chat ativo, adiciona a mensagem
+        //senão dá só um aviso
+        if (messageSend.fkIdSender == thisReceiverId) {
+            var messageFormatted = messageSend.text.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
 
-        var dateFormatted = FormatDate(messageSend.sendDate);
+            var dateFormatted = FormatDate(messageSend.sendDate);
 
-        var messagesList = document.querySelector('.messages');
+            var messagesList = document.querySelector('.messages');
 
-        messagesList.innerHTML += `
+            messagesList.innerHTML += `
                             <div class="box-message-left">
                                 <div class="contact-indicator"></div>
 
@@ -25,7 +27,14 @@ connection.on("ReceiveMessage", function (messageSend) {
                             </div>
                         `;
 
-        messagesList.scrollTop = messagesList.scrollHeight;
+            messagesList.scrollTop = messagesList.scrollHeight;
+        }
+        else {
+            var idSender = 'user-' + messageSend.fkIdSender;
+            var contactItem = document.getElementById(idSender);
+
+            contactItem.lastElementChild.firstElementChild.nextElementSibling.style.opacity = "1";
+        }
     }
 });
 
@@ -82,6 +91,10 @@ connection.start()
 function loadUser(idSender) {
     getUser(idSender);
     getMessages(idSender)
+}
+
+function clearMessages(contactBlock) {
+    contactBlock.lastElementChild.firstElementChild.nextElementSibling.style.opacity = "0";
 }
 
 function getMessages(idSender) {
